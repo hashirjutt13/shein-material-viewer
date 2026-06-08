@@ -1,0 +1,18 @@
+{
+  "name": "shein-material-viewer",
+  "version": "0.1.0",
+  "description": "Chrome MV3 extension that shows SHEIN product materials on product cards with optional material filters.",
+  "private": true,
+  "scripts": {
+    "test": "node tests/parser.test.mjs",
+    "check": "node --check src/shared/logic.js && node --check src/content.js && node --check src/popup.js"
+  },
+  "keywords": [
+    "chrome-extension",
+    "manifest-v3",
+    "shein",
+    "materials",
+    "product-research"
+  ],
+  "license": "MIT"
+}

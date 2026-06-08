@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SHEIN Material Viewer</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="app">
+      <header class="top">
+        <div>
+          <h1>Material Viewer</h1>
+          <p id="statusText">Waiting for SHEIN page</p>
+        </div>
+        <label id="enabledWrap" class="switch filter-only" title="Enable or disable filtering">
+          <input id="enabledInput" type="checkbox">
+          <span></span>
+        </label>
+      </header>
+
+      <section class="section">
+        <label class="label" for="cardModeInput">Card behavior</label>
+        <select id="cardModeInput">
+          <option value="viewer">Show materials only</option>
+          <option value="filter">Filter by rules</option>
+        </select>
+      </section>
+
+      <section id="presetSection" class="section filter-only">
+        <label class="label" for="presetSelect">Preset</label>
+        <select id="presetSelect">
+          <option value="">Choose a preset</option>
+        </select>
+      </section>
+
+      <section id="filterControlsSection" class="section grid-2 filter-only">
+        <label>
+          <span class="label">Match</span>
+          <select id="combineModeInput">
+            <option value="all">All rules</option>
+            <option value="any">Any rule</option>
+          </select>
+        </label>
+        <label>
+          <span class="label">Display</span>
+          <select id="displayModeInput">
+            <option value="dim">Dim non-matches</option>
+            <option value="hide">Hide non-matches</option>
+            <option value="badge">Badge only</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="section">
+        <div class="section-title">
+          <span>Auto scan</span>
+        </div>
+        <div class="grid-2">
+          <label>
+            <span class="label">Product pages</span>
+            <select id="productPageScanModeInput">
+              <option value="manual">Manual only</option>
+              <option value="auto-slow">Auto slow</option>
+            </select>
+          </label>
+          <label>
+            <span class="label">Other pages</span>
+            <select id="otherPageScanModeInput">
+              <option value="manual">Manual only</option>
+              <option value="auto-slow">Auto slow</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <section class="section grid-2">
+        <label>
+          <span class="label">Delay seconds</span>
+          <input id="scanDelayInput" type="number" min="0" max="300" step="0.5">
+        </label>
+        <label>
+          <span class="label">Random +/- sec</span>
+          <input id="scanRandomnessInput" type="number" min="0" max="120" step="0.5">
+        </label>
+      </section>
+
+      <section id="rulesSection" class="section filter-only">
+        <div class="section-title">
+          <span>Rules</span>
+          <button id="addRuleButton" type="button">Add</button>
+        </div>
+        <div id="rulesList" class="rules"></div>
+      </section>
+
+      <section class="section counts">
+        <div>
+          <strong id="cardCount">0</strong>
+          <span>cards</span>
+        </div>
+        <div>
+          <strong id="scannedCount">0</strong>
+          <span>scanned</span>
+        </div>
+        <div>
+          <strong id="materialCount">0</strong>
+          <span>materials</span>
+        </div>
+        <div>
+          <strong id="errorCount">0</strong>
+          <span>unknown/errors</span>
+        </div>
+      </section>
+
+      <section class="section actions">
+        <button id="refreshButton" type="button">Scan visible details</button>
+        <button id="clearCacheButton" type="button">Clear cache</button>
+      </section>
+
+      <section id="matchExportSection" class="section actions filter-only">
+        <button id="exportMatchesCsvButton" type="button">Matches CSV</button>
+        <button id="exportMatchesJsonButton" type="button">Matches JSON</button>
+      </section>
+
+      <section class="section actions">
+        <button id="exportScannedCsvButton" type="button">Scanned CSV</button>
+        <button id="exportScannedJsonButton" type="button">Scanned JSON</button>
+      </section>
+    </main>
+
+    <script src="shared/logic.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>

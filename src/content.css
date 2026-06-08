@@ -1,0 +1,154 @@
+.smf-card {
+  position: relative !important;
+}
+
+.smf-card.smf-hidden {
+  display: none !important;
+}
+
+.smf-card.smf-dimmed {
+  opacity: 0.28 !important;
+  filter: grayscale(0.8) !important;
+}
+
+.smf-badge {
+  position: absolute;
+  z-index: 50;
+  bottom: 8px;
+  left: 8px;
+  max-width: min(190px, calc(100% - 16px));
+  box-sizing: border-box;
+  border-radius: 999px;
+  padding: 4px 7px;
+  font: 10px/1.2 Arial, sans-serif;
+  color: #fff;
+  background: rgba(31, 41, 55, 0.72);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(2px);
+  pointer-events: none;
+  transition: max-width 0.12s ease, border-radius 0.12s ease, padding 0.12s ease, background 0.12s ease, opacity 0.12s ease;
+}
+
+.smf-badge__state {
+  display: inline;
+  margin-bottom: 0;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.smf-badge__composition {
+  display: none;
+  margin-top: 3px;
+  overflow-wrap: anywhere;
+}
+
+.smf-card:hover > .smf-badge,
+.smf-card:focus-within > .smf-badge,
+.smf-badge--error {
+  max-width: min(240px, calc(100% - 16px));
+  border-radius: 6px;
+  padding: 6px 8px;
+  background: rgba(31, 41, 55, 0.94);
+}
+
+.smf-card:hover > .smf-badge .smf-badge__composition,
+.smf-card:focus-within > .smf-badge .smf-badge__composition,
+.smf-badge--error .smf-badge__composition {
+  display: block;
+}
+
+.smf-badge__action {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 7px;
+  border: 0;
+  border-radius: 999px;
+  padding: 5px 9px;
+  color: #111827;
+  background: rgba(255, 255, 255, 0.92);
+  font: 700 11px/1 Arial, sans-serif;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.smf-badge__action:hover {
+  background: #fff;
+}
+
+.smf-card:hover > .smf-badge .smf-badge__action,
+.smf-card:focus-within > .smf-badge .smf-badge__action,
+.smf-badge--error .smf-badge__action {
+  display: inline-flex;
+}
+
+.smf-badge--match {
+  background: rgba(22, 101, 52, 0.72);
+}
+
+.smf-badge--material {
+  background: rgba(17, 24, 39, 0.72);
+}
+
+.smf-badge--miss {
+  background: rgba(127, 29, 29, 0.72);
+}
+
+.smf-badge--pending {
+  background: rgba(67, 56, 202, 0.72);
+}
+
+.smf-badge--unknown {
+  background: rgba(71, 85, 105, 0.82);
+}
+
+.smf-badge--error {
+  background: rgba(120, 53, 15, 0.94);
+}
+
+.smf-card:hover > .smf-badge--material,
+.smf-card:focus-within > .smf-badge--material {
+  background: rgba(17, 24, 39, 0.94);
+}
+
+.smf-card:hover > .smf-badge--match,
+.smf-card:focus-within > .smf-badge--match {
+  background: rgba(22, 101, 52, 0.94);
+}
+
+.smf-card:hover > .smf-badge--miss,
+.smf-card:focus-within > .smf-badge--miss {
+  background: rgba(127, 29, 29, 0.94);
+}
+
+.smf-card:hover > .smf-badge--pending,
+.smf-card:focus-within > .smf-badge--pending {
+  background: rgba(67, 56, 202, 0.94);
+}
+
+.smf-card:hover > .smf-badge--unknown,
+.smf-card:focus-within > .smf-badge--unknown {
+  background: rgba(71, 85, 105, 0.94);
+}
+
+.smf-detail-toast {
+  position: fixed;
+  z-index: 2147483647;
+  right: 16px;
+  bottom: 16px;
+  max-width: 320px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #fff;
+  background: rgba(17, 24, 39, 0.96);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  font: 12px/1.35 Arial, sans-serif;
+}
+
+.smf-detail-toast strong {
+  display: block;
+  margin-bottom: 2px;
+}

@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "SHEIN Material Viewer",
+  "description": "Show SHEIN product materials on product cards, with optional material composition filters.",
+  "version": "0.1.0",
+  "permissions": ["storage", "activeTab", "tabs"],
+  "host_permissions": ["https://*.shein.com/*"],
+  "action": {
+    "default_title": "SHEIN Material Viewer",
+    "default_popup": "src/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.shein.com/*"],
+      "js": ["src/shared/logic.js", "src/content.js"],
+      "css": ["src/content.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
