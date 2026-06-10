@@ -209,13 +209,32 @@
   function canonicalProductUrl(url) {
     try {
       const parsed = new URL(url, "https://www.shein.com/");
-      const mallCode = parsed.searchParams.get("mallCode") || "1";
+      const mallCode = parsed.searchParams.get("mallCode") || parsed.searchParams.get("mall_code") || "1";
+      const attrIds = parsed.searchParams.get("attr_ids") || "";
       parsed.search = "";
       parsed.hash = "";
       parsed.searchParams.set("mallCode", mallCode);
+      if (attrIds) parsed.searchParams.set("attr_ids", attrIds);
       return parsed.href;
     } catch (error) {
       return url;
+    }
+  }
+
+  function productIdFromUrl(url) {
+    const match = String(url || "").match(/-p-(\d+)\.html/i);
+    return match ? match[1] : "";
+  }
+
+  function productCacheKeyFromUrl(url, fallbackId) {
+    const productId = productIdFromUrl(url) || String(fallbackId || "");
+    if (!productId) return "";
+    try {
+      const parsed = new URL(url, "https://www.shein.com/");
+      const attrIds = normalizeWhitespace(parsed.searchParams.get("attr_ids") || "");
+      return attrIds ? `${productId}:attr_ids=${attrIds}` : productId;
+    } catch (error) {
+      return productId;
     }
   }
 
@@ -413,6 +432,7 @@
   function productToExportRows(products) {
     return Object.values(products || {}).map((product) => ({
       id: product.id || "",
+      productId: product.productId || productIdFromUrl(product.url) || product.id || "",
       title: product.title || "",
       url: product.url || "",
       price: product.price || "",
@@ -430,7 +450,7 @@
   }
 
   function rowsToCsv(rows) {
-    const columns = ["id", "title", "url", "price", "rawComposition", "parsedComposition", "source", "scannedAt", "error"];
+    const columns = ["id", "productId", "title", "url", "price", "rawComposition", "parsedComposition", "source", "scannedAt", "error"];
     const lines = [columns.join(",")];
     for (const row of rows) lines.push(columns.map((column) => csvEscape(row[column])).join(","));
     return lines.join("\n");
@@ -447,6 +467,8 @@
     displayMaterialName,
     parseCompositionString,
     canonicalProductUrl,
+    productIdFromUrl,
+    productCacheKeyFromUrl,
     parseMaterialExposedFromHtml,
     extractMaterialsFromHtml,
     evaluateProduct,

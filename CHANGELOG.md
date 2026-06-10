@@ -6,6 +6,7 @@ All notable changes to `shein-material-viewer` will be documented in this file.
 
 - Removed material inference from product titles and listing-card text.
 - Purge old `listing-hint` cache entries on load.
+- Preserve `attr_ids` in scan URLs and use variant-aware cache keys.
 
 ## 0.1.0 - 2026-06-08
 

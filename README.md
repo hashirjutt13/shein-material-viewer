@@ -19,7 +19,8 @@ The extension was built for situations where SHEIN does not provide a useful mat
 - Treats `spandex` and `elastane` as the same material family.
 - Shows `Material unknown` with a Retry button when a product has no extractable material data.
 - Does not cache unknown/error results.
-- Caches successful product scans by product ID in `chrome.storage.local`.
+- Caches successful product scans by product/variant key in `chrome.storage.local`.
+- Preserves variant parameters such as `attr_ids` so one variant does not reuse another variant's material.
 - Exports scanned products as CSV or JSON.
 - Includes optional filter mode with rules, presets, dim/hide/badge display modes, and match exports.
 - Handles SHEIN AJAX/grid updates with DOM observation and badge cleanup.
@@ -154,6 +155,7 @@ Numeric percentage rules only pass when the material has a known numeric percent
 CSV and JSON exports include:
 
 - Product ID
+- Base SHEIN product ID
 - Title
 - URL
 - Price text
@@ -176,6 +178,8 @@ It stores data locally in Chrome extension storage:
 It does not send data to a third-party server. Background detail fetches use the browser session and SHEIN cookies because they are same-site requests from the content script.
 
 The extension does not infer materials from product titles or listing-card marketing text. Product titles are stored only as product metadata for badges and exports.
+
+Variant-specific URLs are treated separately when SHEIN provides `attr_ids`. This avoids using one variant's material data for another variant of the same base product.
 
 ## Limitations
 

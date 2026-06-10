@@ -136,8 +136,7 @@
   }
 
   function getProductIdFromUrl(url) {
-    const match = String(url || "").match(/-p-(\d+)\.html/i);
-    return match ? match[1] : "";
+    return logic.productIdFromUrl ? logic.productIdFromUrl(url) : "";
   }
 
   function nextScanDelayMs() {
@@ -267,12 +266,13 @@
   }
 
   async function harvestCurrentDetailPage() {
-    const id = getProductIdFromUrl(location.href);
+    const id = logic.productCacheKeyFromUrl(location.href);
     if (!id || location.pathname.includes("/risk/challenge")) return;
     const extracted = logic.extractMaterialsFromHtml(document.documentElement.innerHTML);
     if (!extracted.materials.length) return;
     const product = {
       id,
+      productId: getProductIdFromUrl(location.href),
       title: logic.normalizeWhitespace(document.title.replace(/\|\s*SHEIN.*$/i, "")),
       url: logic.canonicalProductUrl(location.href),
       price: getPrice(document.body),
@@ -348,6 +348,7 @@
       if (state.intersectionObserver) state.intersectionObserver.observe(card);
     }
     record.url = logic.canonicalProductUrl(href);
+    record.productId = getProductIdFromUrl(href);
     record.title = getTitle(anchor, card);
     record.price = getPrice(card);
     record.image = getImage(card);
@@ -359,8 +360,9 @@
     const seenThisPass = new Set();
     for (const anchor of anchors) {
       const href = normalizeUrl(anchor.href);
-      const id = anchor.dataset.id || getProductIdFromUrl(href);
-      if (!id || /twitter\.com|facebook\.com|pinterest\.com/i.test(href)) continue;
+      const productId = anchor.dataset.id || getProductIdFromUrl(href);
+      const id = logic.productCacheKeyFromUrl(href, productId);
+      if (!id || !productId || /twitter\.com|facebook\.com|pinterest\.com/i.test(href)) continue;
       if (seenThisPass.has(id)) continue;
       seenThisPass.add(id);
       const card = likelyProductCard(anchor);
@@ -370,6 +372,7 @@
       } else {
         record = {
           id,
+          productId,
           url: logic.canonicalProductUrl(href),
           title: getTitle(anchor, card),
           price: getPrice(card),
@@ -447,6 +450,7 @@
       const extracted = logic.extractMaterialsFromHtml(html);
       product = {
         id: record.id,
+        productId: record.productId || getProductIdFromUrl(record.url),
         title: record.title,
         url: record.url,
         price: record.price,
@@ -461,6 +465,7 @@
     } catch (error) {
       product = {
         id: record.id,
+        productId: record.productId || getProductIdFromUrl(record.url),
         title: record.title,
         url: record.url,
         price: record.price,

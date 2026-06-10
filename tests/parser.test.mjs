@@ -44,6 +44,21 @@ assert.equal(
   "https://www.shein.com/Foo-p-123.html?mallCode=1"
 );
 
+assert.equal(
+  logic.canonicalProductUrl("https://www.shein.com/Foo-p-123.html?src_identifier=noisy&mall_code=1&attr_ids=160_212&pageListType=4#x"),
+  "https://www.shein.com/Foo-p-123.html?mallCode=1&attr_ids=160_212"
+);
+
+assert.equal(
+  logic.productCacheKeyFromUrl("https://www.shein.com/Foo-p-123.html?mallCode=1&attr_ids=160_212"),
+  "123:attr_ids=160_212"
+);
+
+assert.equal(
+  logic.productCacheKeyFromUrl("https://www.shein.com/Foo-p-123.html?mallCode=1"),
+  "123"
+);
+
 assert.equal(logic.normalizeSettings({ otherPageScanMode: "auto-slow" }).otherPageScanMode, "auto-slow");
 assert.equal(logic.normalizeSettings({ productPageScanMode: "auto-slow" }).productPageScanMode, "auto-slow");
 assert.equal(logic.normalizeSettings({ scanMode: "auto-slow" }).otherPageScanMode, "auto-slow");

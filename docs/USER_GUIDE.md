@@ -96,6 +96,7 @@ Filter mode also provides **Matches CSV** and **Matches JSON**.
 Exports include:
 
 - Product ID
+- Base SHEIN product ID
 - Title
 - URL
 - Price
@@ -104,6 +105,8 @@ Exports include:
 - Source
 - Scan timestamp
 - Error text, if any
+
+If SHEIN uses variant parameters such as `attr_ids`, the exported product ID may include that variant key so different variants do not overwrite each other.
 
 ## Clearing Cache
 

@@ -73,12 +73,14 @@ Default settings:
 3. Set up a `MutationObserver` for dynamic SHEIN grid changes.
 4. Set up an `IntersectionObserver` for visible card detection.
 5. Find product anchors using URLs that contain `-p-` and `.html`.
-6. Normalize product ID, URL, title, price, image, and card element.
+6. Normalize product ID, variant-aware cache key, URL, title, price, image, and card element.
 7. Attach a single direct `.smf-badge` to each active card.
 8. Apply cached/session material data if available.
 9. Queue manual or slow-auto detail scans when requested.
 
 Product titles and listing-card text are not parsed as material data. They are used only for product metadata such as title, price, image, and export fields.
+
+Cache keys are variant-aware. A plain product URL uses the base product ID, while a URL with `attr_ids` uses a key like `10630788:attr_ids=160_212`.
 
 The queue runs one detail fetch at a time and waits according to `scanDelaySeconds` plus or minus `scanRandomnessSeconds`.
 
@@ -91,6 +93,8 @@ fetch(record.url, { credentials: "include" })
 ```
 
 If the response URL or HTML indicates a SHEIN challenge/captcha page, the queue stops and the product is marked with an error. The user must solve the challenge manually and retry.
+
+Fetch URLs preserve `mallCode` and `attr_ids` while dropping noisy tracking parameters. Preserving `attr_ids` matters because SHEIN variants can have different material compositions.
 
 ## Material Extraction
 
@@ -188,4 +192,4 @@ Badge cleanup keeps one direct badge per active product card and removes stale b
 
 `productToExportRows` and `rowsToCsv` in `src/shared/logic.js` convert current products to CSV rows.
 
-Rows include product metadata, raw material text, parsed material summary, source, timestamp, and error.
+Rows include variant-aware product ID, base product ID, product metadata, raw material text, parsed material summary, source, timestamp, and error.
