@@ -46,7 +46,7 @@ node --check src/popup.js
 
 1. Add a common material display entry if useful.
 2. Add normalization in `normalizeMaterialName`.
-3. Add listing hint support in `inferMaterialsFromText` only if the keyword is unlikely to create false positives.
+3. Do not infer material from product titles or listing-card marketing text.
 4. Add parser tests.
 5. Run tests and syntax checks.
 

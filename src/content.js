@@ -101,7 +101,11 @@
     state.cache = Object.fromEntries(
       Object.entries(cachedProducts).filter((entry) => {
         const product = entry[1];
-        return product && !product.error && Array.isArray(product.materials) && product.materials.length;
+        return product
+          && product.source !== "listing-hint"
+          && !product.error
+          && Array.isArray(product.materials)
+          && product.materials.length;
       })
     );
     if (Object.keys(state.cache).length !== Object.keys(cachedProducts).length) {
@@ -173,16 +177,6 @@
   function getImage(card) {
     const img = card.querySelector("img");
     return img ? (img.currentSrc || img.src || img.dataset.src || "") : "";
-  }
-
-  function getListingText(anchor, card) {
-    return [
-      anchor.dataset.title,
-      anchor.getAttribute("aria-label"),
-      anchor.title,
-      anchor.textContent,
-      card.innerText
-    ].filter(Boolean).join(" ");
   }
 
   function ensureBadge(card) {
@@ -389,24 +383,6 @@
         state.intersectionObserver.observe(card);
       }
       cleanupCardBadges(card);
-      if (!state.cache[id] && !state.sessionResults[id]) {
-        const hintMaterials = logic.inferMaterialsFromText(getListingText(anchor, card));
-        if (hintMaterials.length) {
-          state.cache[id] = {
-            id,
-            title: record.title,
-            url: record.url,
-            price: record.price,
-            image: record.image,
-            rawComposition: logic.summarizeMaterials(hintMaterials),
-            materials: hintMaterials,
-            source: "listing-hint",
-            scannedAt: new Date().toISOString(),
-            error: ""
-          };
-          registerMaterialIndex(state.cache[id]);
-        }
-      }
       if (state.cache[id] || state.sessionResults[id]) applyCard(record);
     }
   }

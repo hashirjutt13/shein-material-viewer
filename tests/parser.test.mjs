@@ -39,14 +39,6 @@ assert.ok(byKey(unknown, "woven"));
 assert.ok(byKey(unknown, "denim"));
 assert.equal(byKey(unknown, "woven").percentage, null);
 
-const discountHint = logic.inferMaterialsFromText("-65% Last day VIVINTIMO Men's Linen Pants");
-assert.equal(byKey(discountHint, "last"), undefined);
-assert.equal(byKey(discountHint, "linen").percentage, null);
-
-const titleHint = logic.inferMaterialsFromText("Made Of 65% Polyester, 35% Viscose With Drawstring");
-assert.equal(byKey(titleHint, "polyester").percentage, 65);
-assert.equal(byKey(titleHint, "rayon").percentage, 35);
-
 assert.equal(
   logic.canonicalProductUrl("https://www.shein.com/Foo-p-123.html?src_identifier=noisy&mallCode=1&pageListType=4#x"),
   "https://www.shein.com/Foo-p-123.html?mallCode=1"

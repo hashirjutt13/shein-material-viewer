@@ -78,6 +78,8 @@ Default settings:
 8. Apply cached/session material data if available.
 9. Queue manual or slow-auto detail scans when requested.
 
+Product titles and listing-card text are not parsed as material data. They are used only for product metadata such as title, price, image, and export fields.
+
 The queue runs one detail fetch at a time and waits according to `scanDelaySeconds` plus or minus `scanRandomnessSeconds`.
 
 ## Product Detail Fetching
@@ -106,6 +108,8 @@ Fallback strategy:
 1. Strip scripts, styles, and HTML tags.
 2. Search text for labels such as `Composition`, `Material`, `Case Material`, and `Strap Material`.
 3. Parse up to the first few likely values.
+
+There is no title/listing fallback. If detail-page material fields are missing, the product is marked `Material unknown`.
 
 ## Parser Behavior
 

@@ -11,7 +11,6 @@ The extension was built for situations where SHEIN does not provide a useful mat
 - Shows material badges on SHEIN product cards.
 - Works across SHEIN listing/search/category grids, not only clothing pages.
 - Supports clothing fibers and non-clothing materials such as TPU, PC, silicone, metal, zinc alloy, PU leather, resin, rubber, and tempered glass.
-- Reads visible listing text as a first-pass hint when material text is available on the card.
 - Fetches product detail pages only when you manually scan visible cards or enable deliberately slow auto scan.
 - Extracts material data from SHEIN detail-page scripts, especially `materialExposed.materialInfoList`.
 - Parses percentages such as `65% Polyester, 35% Viscose`.
@@ -175,6 +174,8 @@ It stores data locally in Chrome extension storage:
 - Discovered material labels
 
 It does not send data to a third-party server. Background detail fetches use the browser session and SHEIN cookies because they are same-site requests from the content script.
+
+The extension does not infer materials from product titles or listing-card marketing text. Product titles are stored only as product metadata for badges and exports.
 
 ## Limitations
 

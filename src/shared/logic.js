@@ -206,55 +206,6 @@
     return mergeMaterialEntries(entries);
   }
 
-  function inferMaterialsFromText(value) {
-    const text = normalizeWhitespace(value);
-    if (!text) return [];
-    const entries = [];
-    const materialWord = "(?:viscose|rayon|modal|lyocell|cotton|polyester|elastane|spandex|linen|polyamide|nylon|wool|acrylic|tpu|pc|polycarbonate|pu leather|silicone|tempered glass|plastic|metal|zinc alloy|aluminum|aluminium|resin|rubber)";
-    const percentageSnippets = [
-      ...text.matchAll(new RegExp(`\\d+(?:\\.\\d+)?\\s*%\\s*${materialWord}`, "gi")),
-      ...text.matchAll(new RegExp(`${materialWord}\\s*\\d+(?:\\.\\d+)?\\s*%`, "gi"))
-    ].map((match) => match[0]);
-    if (percentageSnippets.length) {
-      entries.push(...parseCompositionString(percentageSnippets.join(", ")));
-    }
-
-    const keywordGroups = [
-      { key: "rayon", label: "Rayon / Viscose", pattern: /\b(viscose|rayon|modal|lyocell)\b/i },
-      { key: "cotton", label: "Cotton", pattern: /\bcotton\b/i },
-      { key: "polyester", label: "Polyester", pattern: /\bpolyester\b/i },
-      { key: "elastane", label: "Elastane / Spandex", pattern: /\b(elastane|spandex)\b/i },
-      { key: "linen", label: "Linen", pattern: /\blinen\b/i },
-      { key: "polyamide", label: "Polyamide / Nylon", pattern: /\b(polyamide|nylon)\b/i },
-      { key: "wool", label: "Wool", pattern: /\bwool\b/i },
-      { key: "acrylic", label: "Acrylic", pattern: /\bacrylic\b/i },
-      { key: "tpu", label: "TPU", pattern: /\b(tpu|thermoplastic polyurethane)\b/i },
-      { key: "polycarbonate", label: "Polycarbonate / PC", pattern: /\b(pc|polycarbonate)\b/i },
-      { key: "pu-leather", label: "PU Leather", pattern: /\b(pu leather|polyurethane leather|faux leather|vegan leather)\b/i },
-      { key: "silicone", label: "Silicone", pattern: /\bsilicone\b/i },
-      { key: "tempered-glass", label: "Tempered Glass", pattern: /\btempered glass\b/i },
-      { key: "plastic", label: "Plastic", pattern: /\bplastic\b/i },
-      { key: "metal", label: "Metal", pattern: /\bmetal\b/i },
-      { key: "zinc-alloy", label: "Zinc Alloy", pattern: /\bzinc alloy\b/i },
-      { key: "aluminum", label: "Aluminum", pattern: /\b(aluminum|aluminium)\b/i },
-      { key: "resin", label: "Resin", pattern: /\bresin\b/i },
-      { key: "rubber", label: "Rubber", pattern: /\brubber\b/i }
-    ];
-
-    for (const group of keywordGroups) {
-      if (group.pattern.test(text)) {
-        entries.push({
-          key: group.key,
-          rawName: group.label,
-          displayName: group.label,
-          percentage: null,
-          present: true
-        });
-      }
-    }
-    return mergeMaterialEntries(entries);
-  }
-
   function canonicalProductUrl(url) {
     try {
       const parsed = new URL(url, "https://www.shein.com/");
@@ -495,7 +446,6 @@
     normalizeWhitespace,
     displayMaterialName,
     parseCompositionString,
-    inferMaterialsFromText,
     canonicalProductUrl,
     parseMaterialExposedFromHtml,
     extractMaterialsFromHtml,
